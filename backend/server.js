@@ -27,25 +27,23 @@ app.use(express.json());
 
 // 3. URL Encoded Parser — For form submissions
 app.use(express.urlencoded({ extended: true }));
-
-// 4. Static Files — Serve uploaded images
-// If someone requests /uploads/image.jpg, send the file
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-// ── API Routes ──
-app.use('/api/auth', authRoutes);        // All auth routes: /api/auth/...
-app.use('/api/requests', requestRoutes); // All request routes: /api/requests/...
-
-// ── Health Check Route ──
-// Visit http://localhost:5000/ to verify server is running
-app.get((req, res) => {
-  res.json({ 
-    message: '🏠 Zepnest API is running!',
-    version: '1.0.0',
-    status: 'OK'
+  
+  // 4. Static Files - Serve uploaded images
+ // If someone requests /uploads/image.jpg, send the file
+ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+  
+  // --- Health Check Route ---
+  app.get('/', (req, res) => {
+    res.json({
+      success: true,
+      message: 'Zepnest backend is live',
+      db: 'MySQL Connected'
+    });
   });
-});
-
+ 
+  // --- API Routes ---
+  app.use('/api/auth', authRoutes);
+  app.use('/api/requests', requestRoutes);
 // ── 404 Handler — for unknown routes ──
 app.use((req, res) => {
   res.status(404).json({ 
