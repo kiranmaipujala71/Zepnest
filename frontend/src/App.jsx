@@ -3,12 +3,12 @@
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar.jsx';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Dashboard from './pages/Dashboard';
-import RequestList from './pages/RequestList';
-import CreateRequest from './pages/CreateRequest';
-import EditRequest from './pages/EditRequest';
+import Login from './pages/Login.jsx';
+import Register from './pages/Register.jsx';
+import Dashboard from './pages/Dashboard.jsx';
+import RequestList from './pages/RequestList.jsx';
+import CreateRequest from './pages/CreateRequest.jsx';
+import EditRequest from './pages/EditRequest.jsx';
 
 // ProtectedRoute — redirects to login if not authenticated
 const ProtectedRoute = ({ children }) => {
