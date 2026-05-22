@@ -2,7 +2,7 @@
 // This is the main app file — sets up all the routes (page addresses)
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Navbar from './components/Navbar';
+import Navbar from './components/Navbar.jsx';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
