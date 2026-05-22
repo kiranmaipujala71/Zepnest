@@ -1,0 +1,11 @@
+node_modules/
+   .env
+   *.env
+   dist/
+   build/
+   .vite/
+   *.jpeg
+   *.jpg
+   *.png
+   backend/node_modules/
+   frontend/node_modules/
