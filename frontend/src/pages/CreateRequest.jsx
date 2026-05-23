@@ -45,18 +45,17 @@ const CreateRequest = () => {
         try {
             // Use FormData to send files along with text data
             const form = new FormData();
-            form.append('title', formData.title);
-            form.append('description', formData.description);
-            form.append('category', formData.category);
-            form.append('address', formData.address);
-            form.append('preferred_time', formData.preferred_time);
-            if (image) {
-                form.append('image', image); // Must match multer field name
-            }
+form.append('title', formData.title);
+form.append('description', formData.description);
+form.append('service_type', formData.category);      // ← Fixed
+form.append('location', formData.address);           // ← Fixed
+form.append('preferred_time', formData.preferred_time);
+form.append('budget', '0');                          // ← Add this, backend needs it
+if (image) {
+  form.append('image', image); 
+}
 
-            const { data } = await api.post('/requests', form, {
-                headers: { 'Content-Type': 'multipart/form-data' }
-            });
+            const { data } = await api.post('/requests', form);
 
             if (data.success) {
                 setSuccess('Request created successfully!');

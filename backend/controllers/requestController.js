@@ -104,6 +104,7 @@ const getRequestById = async (req, res) => {
 // ─────────────────────────────────────────
 // UPDATE REQUEST STATUS — PATCH /api/requests/:id/status
 // ─────────────────────────────────────────
+// UPDATE REQUEST STATUS - PATCH /api/requests/:id/status
 const updateRequestStatus = async (req, res) => {
   const userId = req.user.id;
   const requestId = req.params.id;
@@ -111,13 +112,35 @@ const updateRequestStatus = async (req, res) => {
 
   // Validate status value
   const allowedStatuses = ['Pending', 'In Progress', 'Completed', 'Cancelled'];
-  if (!status || !allowedStatuses.includes(status)) {
-    return res.status(400).json({ 
-      success: false, 
-      message: `Status must be one of: ${allowedStatuses.join(', ')}` 
+  if (!status ||!allowedStatuses.includes(status)) {
+    return res.status(400).json({
+      success: false,
+      message: `Status must be one of: ${allowedStatuses.join(', ')}`
     });
   }
 
+  try {
+    // Update the request - only if user owns it or is admin
+    const sql = `UPDATE service_requests SET status =? WHERE id =?`;
+    const [result] = await pool.execute(sql, [status, requestId]);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'Request not found or you do not have permission'
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Status updated successfully'
+    });
+
+  } catch (err) {
+    console.error('Update Status Error:', err);
+    res.status(500).json({ success: false, message: 'Server error.' });
+  }
+};
   try {
     // Check this request belongs to the user
     const [existing] = await pool.execute(

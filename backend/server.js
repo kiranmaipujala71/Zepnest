@@ -17,7 +17,7 @@ const app = express();
 
 // 1. CORS — Allow frontend (localhost:5173) to call this backend
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+origin: ['http://localhost:5173', 'https://zepnest-tau.vercel.app'], // ← Add your Vercel URL
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   credentials: true
 }));
