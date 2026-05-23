@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
+const db= require('../config/db');
 const { protect } = require('../middleware/authMiddleware');
 const {
   createRequest,
@@ -49,4 +50,5 @@ router.get('/:id', protect, getRequestById);                       // Get one
 router.patch('/:id/status', protect, updateRequestStatus);         // Update status
 router.delete('/:id', protect, deleteRequest);                     // Delete
 
+});
 module.exports = router;
