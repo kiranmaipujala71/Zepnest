@@ -2,7 +2,7 @@
 // This is the HEART of the backend — it starts everything
 import express from 'express';
 import cors from 'cors';
-import authRoutes from './routes/auth.js';
+import authRoutes from './routes/authRoutes.js';
 import requestRoutes from './routes/requestRoutes.js';
 import path from 'path';
 import dotenv from 'dotenv';
