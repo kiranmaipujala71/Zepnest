@@ -140,7 +140,6 @@ const updateRequestStatus = async (req, res) => {
     console.error('Update Status Error:', err);
     res.status(500).json({ success: false, message: 'Server error.' });
   }
-};
   try {
     // Check this request belongs to the user
     const [existing] = await pool.execute(
