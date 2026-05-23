@@ -2,42 +2,71 @@
 // This is the HEART of the backend — it starts everything
 import express from 'express';
 import cors from 'cors';
-import path from 'path';
-import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
 import requestRoutes from './routes/requestRoutes.js';
+import path from 'path';
+import dotenv from 'dotenv';
+require('dotenv').config(); // Load .env variables
 
-dotenv.config(); // Load .env variables
+// ── Middleware (runs on EVERY request) ──
 
-// Create Express app
-const app = express();
-
-// --- Middleware --- MUST be before routes
-// 1. CORS - Allow frontend to call this backend
+// 1. CORS — Allow frontend (localhost:5173) to call this backend
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'https://zepnest-tau.vercel.app'
-  ],
+origin: ['http://localhost:5173', 'https://zepnest-tau.vercel.app'], // ← Add your Vercel URL
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   credentials: true
 }));
 
+// 2. JSON Parser — Allow Express to read JSON request bodies
 app.use(express.json());
 
-// --- Health Check Route ---
-app.get('/', (req, res) => {
-  res.json({
-    success: true,
-    message: 'Zepnest backend is live',
-    db: 'MySQL Connected'
+// 3. URL Encoded Parser — For form submissions
+app.use(express.urlencoded({ extended: true }));
+  
+  // 4. Static Files - Serve uploaded images
+ // If someone requests /uploads/image.jpg, send the file
+ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+  
+  // --- Health Check Route ---
+  app.get('/', (req, res) => {
+    res.json({
+      success: true,
+      message: 'Zepnest backend is live',
+      db: 'MySQL Connected'
+    });
+  });
+ 
+
+// Add this BEFORE your routes
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://zepnest-tau.vercel.app' // ← Add your Vercel URL
+  ],
+  credentials: true
+}));
+  // --- API Routes ---
+  app.use('/api/auth', authRoutes);
+  app.use('/api/requests', requestRoutes);
+// ── 404 Handler — for unknown routes ──
+app.use((req, res) => {
+  res.status(404).json({ 
+    success: false, 
+    message: `Route ${req.originalUrl} not found.` 
   });
 });
 
-// --- API Routes ---
-app.use('/api/auth', authRoutes);
-app.use('/api/requests', requestRoutes);
+// ── Global Error Handler ──
+app.use((err, req, res, next) => {
+  console.error('Global Error:', err.message);
+  res.status(err.status || 500).json({
+    success: false,
+    message: err.message || 'Internal server error.'
+  });
+});
 
+// ── Start Server ──
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`🚀 Zepnest backend running at http://localhost:${PORT}`);
 });
