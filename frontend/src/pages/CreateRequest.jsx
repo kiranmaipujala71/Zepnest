@@ -48,9 +48,9 @@ const CreateRequest = () => {
 form.append('title', formData.title);
 form.append('description', formData.description);
 form.append('service_type', formData.category);      // ← Fixed
-form.append('location', formData.address);           // ← Fixed
-form.append('preferred_time', formData.preferred_time);
-form.append('budget', '0');                          // ← Add this, backend needs it
+form.append('location', 'Not specified'); 
+form.append('preferred_time', new Date().toISOString()); // Sends current time
+form.append('budget', '0');          // ← Add this, backend needs it
 if (image) {
   form.append('image', image); 
 }
