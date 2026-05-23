@@ -1,5 +1,9 @@
 // backend/server.js
 // This is the HEART of the backend — it starts everything
+import express from 'express';
+import cors from 'cors';
+import authRoutes from './routes/auth.js';
+import requestRoutes from './routes/requestRoutes.js';
 
 const express = require('express');
 const cors = require('cors');
@@ -41,6 +45,15 @@ app.use(express.urlencoded({ extended: true }));
     });
   });
  
+
+// Add this BEFORE your routes
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://zepnest-tau.vercel.app' // ← Add your Vercel URL
+  ],
+  credentials: true
+}));
   // --- API Routes ---
   app.use('/api/auth', authRoutes);
   app.use('/api/requests', requestRoutes);
