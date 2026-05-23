@@ -50,5 +50,5 @@ router.get('/:id', protect, getRequestById);                       // Get one
 router.patch('/:id/status', protect, updateRequestStatus);         // Update status
 router.delete('/:id', protect, deleteRequest);                     // Delete
 
-});
+
 module.exports = router;
