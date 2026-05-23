@@ -6,7 +6,7 @@ import axios from 'axios';
 
 // Create a custom axios instance
 const api = axios.create({
-  baseURL: 'http://thirty-waves-stay.loca.it/api',
+  baseURL: 'https://thirty-waves-stay.loca.lt/api',
   // VITE_API_URL is the deployed backend URL (set in .env)
   // During development, uses localhost:5000
 });
