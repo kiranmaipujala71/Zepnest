@@ -154,10 +154,10 @@ const RequestList = () => {
                 </div>
 
                 {/* Show image if exists */}
-                {req.image_url && (
+                {req.imageUrl && (
                   <div style={{ marginTop: '12px' }}>
                     <img
-                    src={req.image_url}
+                    src={req.imageUrl}
                     alt="Request"
                     style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #ccc' }}
 />
