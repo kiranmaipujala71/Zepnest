@@ -20,7 +20,7 @@ const createRequest = async (req, res) => {
   }
 
   // Handle optional image upload (multer puts file info in req.file)
-  const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+  const imageUrl = req.file ?req.file.path: null;
 
   try {
     const [result] = await pool.execute(

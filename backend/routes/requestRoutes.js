@@ -5,6 +5,7 @@ const multer = require('multer');
 const path = require('path');
 const db= require('../config/db');
 const { protect } = require('../middleware/authMiddleware');
+const {storage}=require('../cloudinary');
 const {
   createRequest,
   getRequests,
@@ -15,17 +16,8 @@ const {
 
 // ── Multer Configuration (File Upload) ──
 // Configure where and how to save uploaded files
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // Save files in uploads/ folder
-  },
-  filename: (req, file, cb) => {
-    // Create unique filename: timestamp-originalname
-    const uniqueName = Date.now() + '-' + file.originalname.replace(/\s+/g, '-');
-    cb(null, uniqueName);
-  }
-});
 
+ // Create unique filename: timestamp-originalname  
 // Only allow image files
 const fileFilter = (req, file, cb) => {
   const allowedTypes = /jpeg|jpg|png|gif|webp/;
