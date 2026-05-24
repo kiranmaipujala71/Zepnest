@@ -157,10 +157,10 @@ const RequestList = () => {
                 {req.image_url && (
                   <div style={{ marginTop: '12px' }}>
                     <img
-                      src={`${import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'}${req.image_url}`}
-                      alt="Request"
-                      style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #E5E7EB' }}
-                    />
+                    src={req.image_url}
+                    alt="Request"
+                    style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #ccc' }}
+/>
                   </div>
                 )}
               </div>
